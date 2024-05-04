@@ -74,8 +74,6 @@ def create_folder(start_date, end_date, current_folder, subfolders):
             f.write(f'"{path}"\n')
             # Ajout de l'option [ACTUELLE] au chemin et écriture dans le fichier
             indice = path.find("/[")
-            # chemin[: indice + 2] + "[ACTUELLE]" + chemin[indice + 2 :]
-            # f.write(f'"{path[: indice + 2]} [ACTUELLE]{path[indice + 2 :]}"\n')
-            print(f'"{path[: indice]} [ACTUELLE]{path[indice :]}"\n')
+            f.write(f'"{path[: indice]} [ACTUELLE]{path[indice:]}"\n')
     # Retourne True pour indiquer la réussite de la création des dossiers
     return True
