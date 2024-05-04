@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
-from create_folders import creer_dossier  # Import de la fonction creer_dossier
+from create_folders import create_folder  # Import de la fonction creer_dossier
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -124,7 +124,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 subfolder = line_edit.text() or None
                 subfolders.append(subfolder)
 
-            if creer_dossier(start_date, end_date, current_folder, subfolders):
+            if create_folder(start_date, end_date, current_folder, subfolders):
                 message = "Création des dossiers réussis."
             else:
                 raise ValueError("Problème de date !!")
