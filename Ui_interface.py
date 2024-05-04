@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
-from create_folders import create_folder  # Import de la fonction creer_dossier
+from create_folders import create_folder  # Import de la fonction create_folder
 
 
 class MainWindow(QtWidgets.QMainWindow):

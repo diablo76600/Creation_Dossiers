@@ -38,7 +38,7 @@ def create_folder(start_date, end_date, current_folder, subfolders):
         week_number = current_date.strftime("%V")
         # Nom du dossier de la semaine
         dossier_name = (
-            f"Semaine {int(week_number) - int(start_date.strftime('%V')) + 1}"
+            f"Semaine {abs(int(week_number) - int(start_date.strftime('%V')) + 1)}"
         )
         # Chemin complet du dossier de la semaine
         dossier_path = current_folder_path / dossier_name
@@ -73,6 +73,9 @@ def create_folder(start_date, end_date, current_folder, subfolders):
             # Écriture du chemin dans le fichier
             f.write(f'"{path}"\n')
             # Ajout de l'option [ACTUELLE] au chemin et écriture dans le fichier
-            f.write(f'"{path} [ACTUELLE]"\n')
+            indice = path.find("/[")
+            # chemin[: indice + 2] + "[ACTUELLE]" + chemin[indice + 2 :]
+            # f.write(f'"{path[: indice + 2]} [ACTUELLE]{path[indice + 2 :]}"\n')
+            print(f'"{path[: indice]} [ACTUELLE]{path[indice :]}"\n')
     # Retourne True pour indiquer la réussite de la création des dossiers
     return True
