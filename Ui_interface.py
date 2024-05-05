@@ -9,6 +9,8 @@ from create_folders import create_folder  # Import de la fonction create_folder
 
 
 class MainWindow(QtWidgets.QMainWindow):
+    """Classe MainWindow pour l'interface utilisateur de création de dossiers.
+    La classe MainWindow gère l'interface graphique pour la création de dossiers avec des fonctionnalités telles que la sélection de dates, de dossiers, et la création de sous-dossiers."""
     def __init__(self):
         super().__init__()
         self.resize(530, 332)  # Définition de la taille de la fenêtre principale
@@ -25,7 +27,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         today = QtCore.QDate.currentDate()  # Récupération de la date du jour
 
-        # Création des étiquettes et des éditeurs de date pour la date de début et la date de fin
+        # Création des labels et des éditeurs de date pour la date de début et la date de fin
         self.label_date_start = QtWidgets.QLabel(self.gridLayoutWidget)
         self.gridLayout.addWidget(self.label_date_start, 0, 0, 1, 1)
         self.date_edit_start = QtWidgets.QDateEdit(self.gridLayoutWidget)
@@ -86,14 +88,14 @@ class MainWindow(QtWidgets.QMainWindow):
             self.push_button_ok, 9, 0, 2, 0, QtCore.Qt.AlignHCenter
         )
 
-        # Définition du widget de la grille comme widget central de la fenêtre principale
+        # Définition du widget de la grille comme widget central 
         self.setCentralWidget(self.gridLayoutWidget)
 
         # Appel de la fonction retranslateUi pour traduire les textes de l'interface
         self.retranslateUi()
 
     def retranslateUi(self):
-        # Traduction des textes de l'interface
+        """ Traduction des textes de l'interface."""
         self.setWindowTitle("Création Dossiers")
         self.push_button_choice_folder.setText("Choisir")
         self.label_date_end.setText(" Date de fin :")
