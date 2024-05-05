@@ -3,13 +3,13 @@
 from datetime import timedelta
 from pathlib import Path
 
-# Crée un répertoire avec des répertoires parents .
+
 def create_directory(path):
-    # Créer le répertoire avec gestion des parents et de l'existence
+    """Crée un répertoire avec des sous-répertoires """
     path.mkdir(parents=True, exist_ok=True)
 
-
 def format_date(date, index, index_prime):
+    """Formatte une date avec un index et une option spécifique en fonction du jour de la semaine."""
     option = ""
     jour = date.strftime("%a")
     jour_numero = date.strftime("%d")
@@ -22,59 +22,45 @@ def format_date(date, index, index_prime):
     formatted_date = f"[{index}] {jour}-{jour_numero}-{mois_annee}{option}"
     return formatted_date, index_prime
 
-
-# Crée des dossiers à partir d'une date de début jusqu'à une date de fin dans un répertoire donné avec des sous-dossiers optionnels.
 def create_folder(start_date, end_date, current_folder, subfolders):
-    global index_prime
-    # Date actuelle pour commencer la création de dossier
+    """Crée des dossiers à partir d'une date de début jusqu'à une date de fin dans un répertoire donné avec des sous-dossiers optionnels."""
+    if end_date < start_date:
+        return False
+
     current_date = start_date
-    # Chemin du dossier principal
     current_folder_path = Path(current_folder)
-    # Liste pour stocker les chemins des dossiers créés
     chemins = []
-    # Index pour numéroter les dossiers
-    index = 1
-    index_prime = 0
     folder_num = 1
     week_num = start_date.isocalendar()[1]
+    index = 1
+    index_prime = 0
+
     while current_date <= end_date:
         if week_num != current_date.isocalendar()[1]:
             folder_num += 1
             week_num = current_date.isocalendar()[1]
-        # Nom du dossier de la semaine
+
         dossier_name = f"Semaine {folder_num}"
-        # Chemin complet du dossier de la semaine
         dossier_path = current_folder_path / dossier_name
-        # Création du dossier de la semaine
         create_directory(dossier_path)
+        
         path_format, index_prime = format_date(current_date, index, index_prime)
-        # Chemin complet du dossier avec la date formatée
         dossier_path = dossier_path / Path(path_format)
-        # Création du dossier avec la date formatée
         create_directory(dossier_path)
 
-        # Boucle pour créer les sous-dossiers dans le dossier principal
         for subfolder in subfolders:
             if subfolder:
-                # Chemin complet du sous-dossier
                 subfolder_path = dossier_path / subfolder
-                # Création du sous-dossier
                 create_directory(subfolder_path)
 
-        # Ajout du chemin à la liste des chemins
         chemins.append(dossier_path.as_posix())
-        # Passage à la date suivante
         current_date += timedelta(days=1)
-        # Incrémentation de l'index pour le prochain numéro de dossier
         index += 1
 
-    # Écriture des chemins dans un fichier texte
     with open(current_folder_path / "Chemins.txt", "w") as f:
         for path in chemins:
-            # Écriture du chemin dans le fichier
             f.write(f'"{path}"\n')
-            # Ajout de l'option [ACTUELLE] au chemin et écriture dans le fichier
             indice = path.find("/[")
             f.write(f'"{path[:indice]} [ACTUELLE]{path[indice:]}"\n')
-    # Retourne True pour indiquer la réussite de la création des dossiers
+
     return True
