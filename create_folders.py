@@ -9,18 +9,23 @@ def create_directory(path):
     path.mkdir(parents=True, exist_ok=True)
 
 
-# Fonction pour formater la date selon le modèle souhaité
 def format_date(date, index, index_prime):
-    day_mapping = {"Sam": f" [PRIME-{index_prime + 1}]", "Mar": " [ÉVALS]"}
+    option = ""
     jour = date.strftime("%a")
-    formatted_date = (
-        f"[{index}] {date.strftime('%a-%d-%m-%Y')}{day_mapping.get(jour, '')}"
-    )
-    index_prime += 1 if jour == "Sam" else 0
+    jour_numero = date.strftime("%d")
+    mois_annee = date.strftime("%m-%Y")
+    if jour == "Sam":
+        index_prime += 1
+        option = f" [PRIME-{index_prime}]"
+    elif jour == "Mar":
+        option = " [ÉVALS]​"
+    formatted_date = f"[{index}] {jour}-{jour_numero}-{mois_annee}{option}"
     return formatted_date, index_prime
+
 
 # Crée des dossiers à partir d'une date de début jusqu'à une date de fin dans un répertoire donné avec des sous-dossiers optionnels.
 def create_folder(start_date, end_date, current_folder, subfolders):
+    global index_prime
     # Date actuelle pour commencer la création de dossier
     current_date = start_date
     # Chemin du dossier principal
@@ -29,26 +34,22 @@ def create_folder(start_date, end_date, current_folder, subfolders):
     chemins = []
     # Index pour numéroter les dossiers
     index = 1
-    # Initialisation de l'index_prime pour gérer les options de dossier
     index_prime = 0
-
-    # Boucle pour créer les dossiers pour chaque jour
+    folder_num = 1
+    week_num = start_date.isocalendar()[1]
     while current_date <= end_date:
-        # Numéro de semaine actuel
-        week_number = current_date.strftime("%V")
+        if week_num != current_date.isocalendar()[1]:
+            folder_num += 1
+            week_num = current_date.isocalendar()[1]
         # Nom du dossier de la semaine
-        dossier_name = (
-            f"Semaine {abs(int(week_number) - int(start_date.strftime('%V')) + 1)}"
-        )
+        dossier_name = f"Semaine {folder_num}"
         # Chemin complet du dossier de la semaine
         dossier_path = current_folder_path / dossier_name
         # Création du dossier de la semaine
         create_directory(dossier_path)
-
-        # Formatage de la date et gestion des options de dossier
-        formatted_date, index_prime = format_date(current_date, index, index_prime)
+        path_format, index_prime = format_date(current_date, index, index_prime)
         # Chemin complet du dossier avec la date formatée
-        dossier_path = dossier_path / formatted_date
+        dossier_path = dossier_path / Path(path_format)
         # Création du dossier avec la date formatée
         create_directory(dossier_path)
 
@@ -74,6 +75,6 @@ def create_folder(start_date, end_date, current_folder, subfolders):
             f.write(f'"{path}"\n')
             # Ajout de l'option [ACTUELLE] au chemin et écriture dans le fichier
             indice = path.find("/[")
-            f.write(f'"{path[: indice]} [ACTUELLE]{path[indice:]}"\n')
+            f.write(f'"{path[:indice]} [ACTUELLE]{path[indice:]}"\n')
     # Retourne True pour indiquer la réussite de la création des dossiers
     return True
