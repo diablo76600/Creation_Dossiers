@@ -6,6 +6,10 @@ from pathlib import Path
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
 from create_folders import create_folder  # Import de la fonction create_folder
+import locale
+
+# Définir la localisation en français
+locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
 
 
 class MainWindow(QtWidgets.QMainWindow):
