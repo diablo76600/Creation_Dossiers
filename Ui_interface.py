@@ -33,6 +33,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.date_edit_start = QtWidgets.QDateEdit(self.gridLayoutWidget)
         self.date_edit_start.setCalendarPopup(True)
         self.date_edit_start.setDate(today)
+        self.date_edit_start.dateChanged.connect(self.update_date)
         self.gridLayout.addWidget(self.date_edit_start, 0, 1, 1, 1)
         #
         self.label_date_end = QtWidgets.QLabel(self.gridLayoutWidget)
@@ -111,6 +112,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_choice_folder.setText(" Dossier de destination :")
         self.push_button_ok.setText("Ok")
 
+    def update_date(self):
+        self.date_edit_end.setDate(self.date_edit_start.date())
+
     def set_current_path(self):
         """Définit le chemin actuel en fonction du dossier sélectionné 
             par l'utilisateur à l'aide d'une boîte de dialogue de sélection de dossier."""
@@ -150,7 +154,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 QMessageBox.Icon.Information,
                 message,
             )
-
 
     @staticmethod
     def display_message(icon, message):
