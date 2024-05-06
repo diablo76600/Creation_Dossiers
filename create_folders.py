@@ -61,6 +61,7 @@ def create_folder(start_date, end_date, current_folder, subfolders, checkbox):
             index_folder += 2
             week_num = current_date.isocalendar()[1]
         else:
+            checkbox.setChecked(False)
             path, index_prime = manage_directory_creation(
                 current_date, folder_num, index_folder, index_prime,
                 current_folder, subfolders)
