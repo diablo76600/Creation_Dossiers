@@ -53,7 +53,7 @@ def create_folder(start_date, end_date, current_folder, subfolders, checkbox):
     index_prime = 0
 
     while current_date <= end_date:
-        if checkbox.isChecked() and current_date.strftime("%a") == "Sam":
+        if checkbox.isChecked() and start_date.strftime("%a") == "Sam":
             paths.extend(
                 create_paths(current_date, folder_num, index_folder,
                     index_prime, current_folder, subfolders, checkbox))
