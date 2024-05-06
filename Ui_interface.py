@@ -41,7 +41,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.date_edit_end.setCalendarPopup(True)
         self.date_edit_end.setDate(today)
         self.gridLayout.addWidget(self.date_edit_end, 1, 1, 1, 1)
-        
+
+        # Créarion du checkbox fusion
         self.checkbox = QtWidgets.QCheckBox(self)
         self.checkbox.setText("Fusion")
         self.gridLayout.addWidget(self.checkbox, 1, 2, 1, 1)
@@ -65,7 +66,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # Création de l'étiquette pour les sous-dossiers
         self.label_subfolder = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_subfolder.setAlignment(QtCore.Qt.AlignCenter)
-        self.gridLayout.addWidget(self.label_subfolder, 4, 1, 1, 1)
+        self.gridLayout.addWidget(
+            self.label_subfolder, 4, 1, 1, 1, QtCore.Qt.AlignHCenter
+        )
 
         # Création des étiquettes et des éditeurs de ligne pour les sous-dossiers
         for i in range(1, 4):
@@ -92,7 +95,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.push_button_ok, 9, 0, 2, 0, QtCore.Qt.AlignHCenter
         )
 
-        # Définition du widget de la grille comme widget central 
+        # Définition du widget de la grille comme widget central
         self.setCentralWidget(self.gridLayoutWidget)
 
         # Appel de la fonction retranslateUi pour traduire les textes de l'interface
