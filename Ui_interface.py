@@ -37,7 +37,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.date_edit_start = QtWidgets.QDateEdit(self.gridLayoutWidget)
         self.date_edit_start.setCalendarPopup(True)
         self.date_edit_start.setDate(today)
-        self.date_edit_start.dateChanged.connect(self.update_date)
         self.gridLayout.addWidget(self.date_edit_start, 0, 1, 1, 1)
         #
         self.label_date_end = QtWidgets.QLabel(self.gridLayoutWidget)
@@ -50,6 +49,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Créarion du checkbox fusion
         self.checkbox = QtWidgets.QCheckBox(self)
         self.checkbox.setText("Fusion")
+        self.checkbox.setChecked(True)
         self.gridLayout.addWidget(self.checkbox, 1, 2, 1, 1)
 
         # Création de l'étiquette, de l'éditeur de ligne et du bouton pour choisir le dossier de destination
@@ -71,8 +71,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Création de l'étiquette pour les sous-dossiers
         self.label_subfolder = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_subfolder.setAlignment(QtCore.Qt.AlignCenter)
-        self.gridLayout.addWidget(
-            self.label_subfolder, 4, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_subfolder, 4, 1, 1, 1)
 
         # Création des étiquettes et des éditeurs de ligne pour les sous-dossiers
         for i in range(1, 4):
@@ -81,6 +80,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.gridLayout.addWidget(label_subfolder, i + 4, 0, 1, 1)
             #
             line_edit_subfolder = QtWidgets.QLineEdit(self.gridLayoutWidget)
+            line_edit_subfolder.setClearButtonEnabled(True)
             setattr(self, f"line_edit_subfolder_{i}", line_edit_subfolder)
             self.gridLayout.addWidget(line_edit_subfolder, i + 4, 1, 1, 1)
 
@@ -114,9 +114,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_subfolder.setText("Création des sous-dossiers (optionnel) :")
         self.label_choice_folder.setText(" Dossier de destination :")
         self.push_button_ok.setText("Ok")
-
-    def update_date(self):
-        self.date_edit_end.setDate(self.date_edit_start.date())
 
     def set_current_path(self):
         """Définit le chemin actuel en fonction du dossier sélectionné 

@@ -8,7 +8,6 @@ def create_directory(path):
     """Crée un répertoire avec des sous-répertoires."""
     path.mkdir(parents=True, exist_ok=True)
 
-
 def get_formatted_date(date, index_folder, index_prime):
     """Formatte une date avec un index et une option spécifique 
         en fonction du jour de la semaine."""
@@ -20,7 +19,6 @@ def get_formatted_date(date, index_folder, index_prime):
         index_prime += 1
         formatted_date += f" [PRIME-{index_prime}]"
     return formatted_date, index_prime
-
 
 def manage_directory_creation(
     date, folder_number, index_folder, index_prime, current_folder, subfolders
@@ -39,8 +37,8 @@ def manage_directory_creation(
             create_directory(subfolder_path)
     return folder_path.as_posix(), index_prime
 
-
 def create_folder(start_date, end_date, current_folder, subfolders, checkbox):
+    # sourcery skip: simplify-boolean-comparison
     """Crée un répertoire avec des sous-répertoires."""
     if end_date < start_date:
         return False
@@ -61,10 +59,9 @@ def create_folder(start_date, end_date, current_folder, subfolders, checkbox):
             current_date += timedelta(days=2)
             index_folder += 2
             index_prime += 1
-
             week_num = current_date.isocalendar()[1]
+            day_bool = False
         else:
-            checkbox.setChecked(False)
             path, index_prime = manage_directory_creation(
                 current_date, folder_num, index_folder, index_prime,
                 current_folder, subfolders)
@@ -74,10 +71,8 @@ def create_folder(start_date, end_date, current_folder, subfolders, checkbox):
             if week_num != current_date.isocalendar()[1]:
                 folder_num += 1
                 week_num = current_date.isocalendar()[1]
-
     write_paths_to_file(paths, current_folder)
     return True
-
 
 def create_paths(current_date, folder_num,
     index_folder, index_prime, current_folder, subfolders, checkbox):
@@ -89,9 +84,7 @@ def create_paths(current_date, folder_num,
         weekend_paths.append(path)
         current_date += timedelta(days=1)
         index_folder += 1
-    checkbox.setChecked(False)
     return weekend_paths
-
 
 def write_paths_to_file(paths, current_folder):
     with open(Path(current_folder) / "Chemins.txt", "w") as f:
