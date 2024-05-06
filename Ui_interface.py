@@ -111,15 +111,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_choice_folder.setText(" Dossier de destination :")
         self.push_button_ok.setText("Ok")
 
-    # Méthode pour choisir le dossier de destination
     def set_current_path(self):
+        """Définit le chemin actuel en fonction du dossier sélectionné 
+            par l'utilisateur à l'aide d'une boîte de dialogue de sélection de dossier."""
         current_path = QFileDialog.getExistingDirectory(
             self, "Selectionnez ou créez un dossier", str(Path.home())
         )
         self.line_choice_folder.setText(current_path)
 
-    # Méthode pour récupérer les valeurs saisies dans l'interface et créer les dossiers
     def get_values(self):
+        """Récupère les valeurs de la date de début, de fin, 
+            du dossier courant et des sous-dossiers saisis dans l'interface utilisateur."""
         try:
             start_date = self.date_edit_start.date().toPyDate()
             end_date = self.date_edit_end.date().toPyDate()
@@ -149,9 +151,11 @@ class MainWindow(QtWidgets.QMainWindow):
                 message,
             )
 
-    # Fonction pour afficher un message à l'utilisateur
+
     @staticmethod
     def display_message(icon, message):
+        """Affiche un message à l'utilisateur 
+            avec une icône spécifiée et un message donné."""
         QMessageBox(icon, "", message).exec()
 
 
