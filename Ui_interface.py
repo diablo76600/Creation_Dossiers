@@ -41,6 +41,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.date_edit_end.setCalendarPopup(True)
         self.date_edit_end.setDate(today)
         self.gridLayout.addWidget(self.date_edit_end, 1, 1, 1, 1)
+        
+        self.checkbox = QtWidgets.QCheckBox(self)
+        self.checkbox.setText("Fusion")
+        self.gridLayout.addWidget(self.checkbox, 1, 2, 1, 1)
 
         # Création de l'étiquette, de l'éditeur de ligne et du bouton pour choisir le dossier de destination
         self.label_choice_folder = QtWidgets.QLabel(self.gridLayoutWidget)
@@ -126,7 +130,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 subfolder = line_edit.text() or None
                 subfolders.append(subfolder)
 
-            if create_folder(start_date, end_date, current_folder, subfolders):
+            if create_folder(start_date, end_date, current_folder, subfolders, self.checkbox):
                 message = "Création des dossiers réussis."
             else:
                 raise ValueError("Problème de date !!")
