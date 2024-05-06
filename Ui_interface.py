@@ -68,8 +68,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_subfolder = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_subfolder.setAlignment(QtCore.Qt.AlignCenter)
         self.gridLayout.addWidget(
-            self.label_subfolder, 4, 1, 1, 1, QtCore.Qt.AlignHCenter
-        )
+            self.label_subfolder, 4, 1, 1, 1)
 
         # Création des étiquettes et des éditeurs de ligne pour les sous-dossiers
         for i in range(1, 4):
