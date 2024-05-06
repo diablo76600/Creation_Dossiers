@@ -12,13 +12,13 @@ def create_directory(path):
 def get_formatted_date(date, index_folder, index_prime):
     """Formatte une date avec un index et une option spécifique 
         en fonction du jour de la semaine."""
-    jour = date.strftime("%a")
+    jour = date.isoweekday()
     formatted_date = date.strftime(f"[{index_folder}] %a-%d-%m-%Y")
-    if jour == "Sam":
+    if jour == 2:
+        formatted_date += " [ÉVALS]​"
+    elif jour == 6:
         index_prime += 1
         formatted_date += f" [PRIME-{index_prime}]"
-    elif jour == "Mar":
-        formatted_date += " [ÉVALS]​"
     return formatted_date, index_prime
 
 
@@ -51,9 +51,10 @@ def create_folder(start_date, end_date, current_folder, subfolders, checkbox):
     week_num = start_date.isocalendar()[1]
     index_folder = 1
     index_prime = 0
+    day_bool = start_date.isoweekday() == 6
 
     while current_date <= end_date:
-        if checkbox.isChecked() and start_date.strftime("%a") == "Sam":
+        if checkbox.isChecked() and day_bool:
             paths.extend(
                 create_paths(current_date, folder_num, index_folder,
                     index_prime, current_folder, subfolders, checkbox))
