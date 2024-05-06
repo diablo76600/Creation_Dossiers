@@ -60,6 +60,8 @@ def create_folder(start_date, end_date, current_folder, subfolders, checkbox):
                     index_prime, current_folder, subfolders, checkbox))
             current_date += timedelta(days=2)
             index_folder += 2
+            index_prime += 1
+
             week_num = current_date.isocalendar()[1]
         else:
             checkbox.setChecked(False)
