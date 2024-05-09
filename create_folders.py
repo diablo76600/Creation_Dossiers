@@ -1,6 +1,6 @@
 # -*- Coding: utf-8 -*-
 
-from datetime import timedelta, date
+from datetime import timedelta
 from pathlib import Path
 
 
@@ -38,8 +38,7 @@ def manage_directory_creation(
     return folder_path.as_posix(), index_prime
 
 def create_folder(start_date, end_date, current_folder, subfolders, checkbox):
-    # sourcery skip: simplify-boolean-comparison
-    """Crée un répertoire avec des sous-répertoires."""
+    """Crée la liste du répertoire avec des sous-répertoires."""
     if end_date < start_date:
         return False
 
@@ -49,17 +48,18 @@ def create_folder(start_date, end_date, current_folder, subfolders, checkbox):
     week_num = start_date.isocalendar()[1]
     index_folder = 1
     index_prime = 0
-    day_bool = start_date.isoweekday() == 6
+    day_bool = start_date.isoweekday() != 1
+    offset_day = 7 - start_date.isoweekday()
 
     while current_date <= end_date:
         if checkbox.isChecked() and day_bool:
             paths.extend(
                 create_paths(current_date, folder_num, index_folder,
-                    index_prime, current_folder, subfolders, checkbox))
-            current_date += timedelta(days=2)
-            index_folder += 2
+                    index_prime, current_folder, subfolders, offset_day))
+            current_date += timedelta(days=offset_day)
+            index_folder += offset_day
             index_prime += 1
-            week_num = current_date.isocalendar()[1]
+            week_num = current_date.isocalendar()[1] + 1
             day_bool = False
         else:
             path, index_prime = manage_directory_creation(
@@ -75,18 +75,20 @@ def create_folder(start_date, end_date, current_folder, subfolders, checkbox):
     return True
 
 def create_paths(current_date, folder_num,
-    index_folder, index_prime, current_folder, subfolders, checkbox):
-    weekend_paths = []
-    for _ in range(2):
+    index_folder, index_prime, current_folder, subfolders, offset_day):
+    """Crée des chemins pour une plage de dates donnée avec des paramètres spécifiés."""
+    week_paths = []
+    for _ in range(offset_day+1):
         path, index_prime = manage_directory_creation(
             current_date, folder_num, index_folder, index_prime, 
             current_folder, subfolders)
-        weekend_paths.append(path)
+        week_paths.append(path)
         current_date += timedelta(days=1)
         index_folder += 1
-    return weekend_paths
+    return week_paths
 
 def write_paths_to_file(paths, current_folder):
+    """Écrit des chemins dans un fichier dans un dossier spécifié."""
     with open(Path(current_folder) / "Chemins.txt", "w") as f:
         for path in paths:
             f.write(f'"{path}"\n')

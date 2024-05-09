@@ -11,7 +11,6 @@ import locale
 # Définir la localisation en français
 locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
 
-
 class MainWindow(QtWidgets.QMainWindow):
     """Classe MainWindow pour l'interface utilisateur de création de dossiers.
     La classe MainWindow gère l'interface graphique pour la création de dossiers avec des fonctionnalités telles que la sélection de dates, de dossiers, et la création de sous-dossiers."""
@@ -46,7 +45,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.date_edit_end.setDate(today)
         self.gridLayout.addWidget(self.date_edit_end, 1, 1, 1, 1)
 
-        # Créarion du checkbox fusion
+        # Création du checkbox fusion
         self.checkbox = QtWidgets.QCheckBox(self)
         self.checkbox.setText("Fusion")
         self.checkbox.setChecked(True)
@@ -136,6 +135,8 @@ class MainWindow(QtWidgets.QMainWindow):
             subfolders = []
             for i in range(1, 4):
                 line_edit = getattr(self, f"line_edit_subfolder_{i}")
+                line_edit.setClearButtonEnabled(True)
+
                 subfolder = line_edit.text() or None
                 subfolders.append(subfolder)
 
