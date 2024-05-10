@@ -11,11 +11,11 @@ def create_directory(path):
 def get_formatted_date(date, index_folder, index_prime):
     """Formatte une date avec un index et une option spécifique 
         en fonction du jour de la semaine."""
-    jour = date.isoweekday()
+    day = date.isoweekday()
     formatted_date = date.strftime(f"[{index_folder}] %a-%d-%m-%Y")
-    if jour == 2:
+    if day == 2:
         formatted_date += " [ÉVALS]​"
-    elif jour == 6:
+    elif day == 6:
         index_prime += 1
         formatted_date += f" [PRIME-{index_prime}]"
     return formatted_date, index_prime
