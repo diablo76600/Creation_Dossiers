@@ -12,8 +12,9 @@ import locale
 locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
 
 class MainWindow(QtWidgets.QMainWindow):
-    """Classe MainWindow pour l'interface utilisateur de création de dossiers.
-    La classe MainWindow gère l'interface graphique pour la création de dossiers avec des fonctionnalités telles que la sélection de dates, de dossiers, et la création de sous-dossiers."""
+    """La classe MainWindow gère l'interface graphique pour la création de dossiers
+        avec des fonctionnalités telles que la sélection de dates, de dossiers, 
+        et la création de sous-dossiers."""
     def __init__(self):
         super().__init__()
         self.resize(530, 332)  # Définition de la taille de la fenêtre principale
